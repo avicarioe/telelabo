@@ -4,6 +4,7 @@
 \usepackage[spanish]{babel}
 \usepackage[pdftex]{color,graphicx}
 \usepackage{caption}
+\usepackage{amsmath}
 
 \usepackage[pdftex,
 	colorlinks=true,
@@ -29,67 +30,79 @@
 \maketitle
 
 
-\section{Diseño e implementación de arquitectura software en el hardware del RealLabo}
+\section{Diferencia entre controladores}
+\subsection{Seguimiento de señales de referencia monómicas}
+En la función de transferencia de los controladores de segundo orden (P, P-D y PD), se puede comprobar que el numerador contiene un subpolinomio completo del denominador con grado $n_s=0$. Esto quiere decir que solo se resuelve el problema de seguimiento para señales monómicas de grado $q<1$, es decir, la señal escalón. Esto quiere decir que:
+\begin{equation}
+	e(\infty)=\lim_{s \rightarrow 0}
+	s H(s) U(s) = 0
+\end{equation}
 
+Siendo $e(s)$ el error en la salida cuando en la entrada tenemos la función escalón $U(s)$. Con funciones de grado superior no se cumple esto: para la señal rampa se obtiene un error finito y para señales de mayor grado, error infinito.
 
-\section{Conclusiones}
+Los controladores de tercer grado con un grado de libertad, que son PI, PID, PI-D, tienen un subpolinomio completo del denominador de grado $n_s=1$, por lo que además de poder resolver el problema de seguimiento con la señal escalón, también lo podrán resolver con la señal rampa. Es decir, lo podrán resolver para señales monómicas de grado $q<2$.
+\begin{equation}
+e(\infty)=\lim_{s \rightarrow 0}
+s H(s) R(s) = 0, \textrm{con grado de } R(s)<2. 
+\end{equation}
 
-Controlador P
+Para los sistemas de dos grados de libertad estudiados existen dos posibilidades. En el sistema PID-D, al ser una generalización de los sistemas de tercer orden ya estudiados posee las mismas propiedades en el sentido del seguimiento de señales de referencia monómicas, es decir, hay error nulo para la rampa y error finito para la parábola. Pero si este sistema cumple la siguiente condición:
+\begin{equation}
+	K_P \tau_{D2} = -\frac{p}{K}
+\end{equation}
+también resuelve el problema de seguimiento para señales parabólicas.
 
-P = Proporcional
-Tenemos parámetro Kp de proporcionalidad
-Primera forma canónica de los sistemas de segundo orden.
-Tenemos frecuencia natural y coeficiente de amortiguamiento relacionados con Kp.
-Mirando la función de transferencia se ve que el numerador contiene un subpolinomio completo del denominador con grado 0. Solo se resuelve el problema de seguimiento para señales monómicas de grado q<1, que es la señal escalón. Se ve con la función de transferencia del error. No hay error con señal escalón y es constante con la señal rampa y de orden superior.
-Se diseña en función de ζ en lugar de Kp (pero el diseño no está completo hasta que se elige un Kp).
-El sistema es más rápido pero más inestable a medida que aumentamos Kp.
-Como es obvio, no tenemos parámetros τD , τI.
+ Por otro lado, el sistema D\textbar PID si es capaz de resolver parábola ya que el numerador contiene un subpolinomio completo del denominador con grado $n_s=3$.
 
-Controlador P-D
-Controlador proporcional y derivativo. Se deriva la señal de salida.
-Tenemos parámetro Kp de proporcionalidad y  τD derivativo.
-Ahora tenemos el coeficiente de amortiguamiento proporcional con  τD.
-Se introduce el parámetro β2 que es proporcional a  ζ y nos da el valor de  τD.
-Controlador P es un caso particular de P-D con  β2=2.
-El parámetro Kd de la aplicación solo amortigua si es un valor negativo. Las relaciones con el resto de los parámetros están en el pdf.
-El error es igual que en el controlador P.
-Puedes elegir independientemente la frecuencia natural y el coeficiente de amortiguamiento.
+\subsection{Comportamiento en régimen transitorio}
+Para estudiar de forma más sencilla los controladores, en lugar de utilizar el parámetro de la constante proporcional, $K_p$, la constante de tiempo integral, $\tau_I$ y la constante de tiempo derivativa, $\tau_D$, se utilizan otros parámetros derivados de estos que resultan más intuitivos.
+\begin{itemize}
+	\item $\omega_n$: pulsación natural.
+	\item $\zeta$: coeficiente de amortiguamiento. Se relaciona la velocidad con la que el sistema responde a una perturbación y con la amplitud de las oscilaciones que se pueden producir.
+	\item $\beta$ y $\beta_2$: se relaciona con el tiempo que el sistema tarda en estabilizarse.
+	\item $M_p$: sobreelongación máxima.
+	\item $t_r$: tiempo de subida.
+	\item $t_p$: tiempo de pico.
+	\item $t_s$: tiempo de estabilización.
+\end{itemize}
+\subsubsection{Controladores P y P-D}
+En un controlador P-D tenemos el parámetro de la rama proporcional $K_p$ y la constante de tiempo derivativa $\tau_D$. Su relación con $\beta_2$ y con $\zeta$ son las siguientes:
+\begin{subequations}
+	\begin{equation}
+		\zeta= \frac{p+K_p K \tau_D}{\sqrt{2 K_p K}}
+	\end{equation}
+	\begin{equation}
+		\tau_D= \frac{\zeta (2-\beta_2)}{\sqrt{K_p K}}
+	\end{equation}
+	\label{eq:1}
+\end{subequations}
+Como se puede observar, cuando $\beta_2=0$, se anula la rama derivativa, por lo que se comprueba que el controlador P es un caso particular del controlador P-D. Por lo tanto, comparten las características de régimen transitorio. Estas características corresponden con las de un sistema de segundo orden en su primera forma canónica. Debido a esto, en el controlador P-D es posible controlar $M_p$ de forma independiente a $t_p$, $t_r$ y $t_s$ mediante la variación de $K_p$ y $\tau_D$ según la ecuación \ref{eq:1}.
 
-Controlador PD
-Controlador proporcional y derivativo. Se deriva la señal de error.
-Es igual al controlador P-D en cuanto a su error, pero este es independiente de τD.
-Si β2 > 2 el valor inicial de la derivada de la posición es negativa. Y se mantiene negativa al principio hasta que tiende a estabilizarse.
-Puedes elegir independientemente la frecuencia natural y el coeficiente de amortiguamiento.
-Controlado PI
-Este controlador tiene error 0 para la rampa y escalón y error finito para la parábola.
-Por lo tanto, solo se puede admite señales escalón y rampa.
-Aparece el parámetro τI.
+\subsubsection{Controladores PI, PID y PI-D}
+Los controladores P, PD, P-D y PI son casos particulares de los controladores PID y PI-D. La razón de que el P y el PD se estudien por separado se debe a que su estudio matemático es posible y no es obligatorio realizar simulaciones, como ocurre con los otros.
+Con estos controladores aparece el parámetro $\beta$ que procede de una escritura alternativa del polinomio característico de las funciones de transferencia de los mismos.
 
-Relaciones importantes para sistemas de segundo orden (página 12 del pdf). Estaría bien escribir una relación de los parámetros β2 y  ζ y los parámetros que nos piden en el enunciado.
+Las ganancias de los factores Derivativo e Integral de estos controladores vienen dadas por:
+\begin{subequations}
+	\begin{equation}
+	K_D=K_P \tau_D
+	\end{equation}
+	\begin{equation}
+	K_I=\frac{K_P}{\tau_I}
+	\end{equation}
+\end{subequations}
 
-Los siguientes dos controladores están explicados a la vez en el pdf.
-Controlador PID
-Igual que el PD
+Ya que estos controladores no se pueden analizar de forma matemática es importante entender como afectan los parámetros del sistema $K_P$, $\tau_I$ y $\tau_D$ a sus polos. Estos nos darán la información sobre su comportamiento. Cuanto más lejos del origen se encuentre el polo, más rápido será el sistema respecto a cualquier cambio y cuanto más alejados entre sí estén los polos conjugados el controlador será más inestable y mayor será $M_p$. Este comportamiento está relacionado con la magnitud del coeficiente de amortiguamiento $\zeta$.
 
-Controlador PI-D
-Igual que P-D
+\subsubsection{Controladores PID-D y D\textbar PID}
+Como los controladores PID-D son una generalización de los controladores PID y PI-D, para los que con $\tau_{D1}=0$ se obtiene un sistema PI-D y con $\tau_{D2}=0$ se obtiene un sistema PID.
 
-Ver las relaciones de la página 16.
-
-Los controladores de segundo orden son casos particulares de los de tercer orden. La relación está con los valores que se le dan a las dos  β
-
-Sistemas de dos grados de libertad
-El sistema de control realimentado PID-D es una generalización con de los sistemas de tercer orden. Solo se hace  τD1 = 0 para PI-D y  τD2 = 0 para PID.
-Estos sistemas si resuelven el problema de seguimiento para una parábola, cosa que no hacían los de orden tres.
-Mirar página 35 para las relaciones que piden.
-
-El sistema D|PID también resuelve la parábola.
-Relaciones en la página 38.
-
-
+Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$ que son funciones que dependen de $\beta$, $\zeta$ y $\omega_n$ de tal forma que si $frac{r1}{\omega_n}$, $frac{r2}{\omega_n^2}$, $frac{r3}{\omega_n}$ son independientes de $\beta_2$, como en el caso del controlador PID-D y D\textbar PID, tendremos $M_p$ independiente de $\beta$, por lo que para diseñar estos controladores se puede seguir el mismo procedimientos que para diseñar los controladores PID y los PI-D.
 
 \begin{thebibliography}{9}
 \bibitem{git} \href{https://github.com/avicarioe/telelabo}{Repositorio del proyecto alojado en GitHub}
+\bibitem{design} Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;
+\href{http://www.robolabo.etsit.upm.es/asignaturas/seco/apuntes/design.pdf}{Diseño}
 
 \end{thebibliography}
 
