@@ -34,6 +34,58 @@
 
 \section{Conclusiones}
 
+Controlador P
+
+P = Proporcional
+Tenemos parámetro Kp de proporcionalidad
+Primera forma canónica de los sistemas de segundo orden.
+Tenemos frecuencia natural y coeficiente de amortiguamiento relacionados con Kp.
+Mirando la función de transferencia se ve que el numerador contiene un subpolinomio completo del denominador con grado 0. Solo se resuelve el problema de seguimiento para señales monómicas de grado q<1, que es la señal escalón. Se ve con la función de transferencia del error. No hay error con señal escalón y es constante con la señal rampa y de orden superior.
+Se diseña en función de ζ en lugar de Kp (pero el diseño no está completo hasta que se elige un Kp).
+El sistema es más rápido pero más inestable a medida que aumentamos Kp.
+Como es obvio, no tenemos parámetros τD , τI.
+
+Controlador P-D
+Controlador proporcional y derivativo. Se deriva la señal de salida.
+Tenemos parámetro Kp de proporcionalidad y  τD derivativo.
+Ahora tenemos el coeficiente de amortiguamiento proporcional con  τD.
+Se introduce el parámetro β2 que es proporcional a  ζ y nos da el valor de  τD.
+Controlador P es un caso particular de P-D con  β2=2.
+El parámetro Kd de la aplicación solo amortigua si es un valor negativo. Las relaciones con el resto de los parámetros están en el pdf.
+El error es igual que en el controlador P.
+Puedes elegir independientemente la frecuencia natural y el coeficiente de amortiguamiento.
+
+Controlador PD
+Controlador proporcional y derivativo. Se deriva la señal de error.
+Es igual al controlador P-D en cuanto a su error, pero este es independiente de τD.
+Si β2 > 2 el valor inicial de la derivada de la posición es negativa. Y se mantiene negativa al principio hasta que tiende a estabilizarse.
+Puedes elegir independientemente la frecuencia natural y el coeficiente de amortiguamiento.
+Controlado PI
+Este controlador tiene error 0 para la rampa y escalón y error finito para la parábola.
+Por lo tanto, solo se puede admite señales escalón y rampa.
+Aparece el parámetro τI.
+
+Relaciones importantes para sistemas de segundo orden (página 12 del pdf). Estaría bien escribir una relación de los parámetros β2 y  ζ y los parámetros que nos piden en el enunciado.
+
+Los siguientes dos controladores están explicados a la vez en el pdf.
+Controlador PID
+Igual que el PD
+
+Controlador PI-D
+Igual que P-D
+
+Ver las relaciones de la página 16.
+
+Los controladores de segundo orden son casos particulares de los de tercer orden. La relación está con los valores que se le dan a las dos  β
+
+Sistemas de dos grados de libertad
+El sistema de control realimentado PID-D es una generalización con de los sistemas de tercer orden. Solo se hace  τD1 = 0 para PI-D y  τD2 = 0 para PID.
+Estos sistemas si resuelven el problema de seguimiento para una parábola, cosa que no hacían los de orden tres.
+Mirar página 35 para las relaciones que piden.
+
+El sistema D|PID también resuelve la parábola.
+Relaciones en la página 38.
+
 
 
 \begin{thebibliography}{9}
