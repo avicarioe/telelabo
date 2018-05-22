@@ -1,0 +1,9 @@
+*.aux
+*.dvi
+*.log
+*.pdf
+*.out
+*.bbl
+*.blg
+*.synctex.gz
+.directory
