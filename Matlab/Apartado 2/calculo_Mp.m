@@ -11,7 +11,7 @@ p=64.986;
 
 %Valores dados
 zetas=[0.2 0.4 0.6 0.8];
-beta2=0.5;
+beta2=3.5;
 
 %Código
 beta=0:50;
@@ -34,5 +34,10 @@ for zeta=zetas
         [y,t]=step(Hf);
         Mpz(i)=max(y)-1;
     end
-    Mp=[Mp Mpz];
+    Mp=[Mp; Mpz];
 end
+plot(beta, Mp')
+hold on
+refline([0, Mp_max])
+refline([0, Mp_min])
+hold off
