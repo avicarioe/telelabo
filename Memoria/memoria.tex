@@ -99,12 +99,95 @@ Como los controladores PID-D son una generalización de los controladores PID y 
 
 Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$ que son funciones que dependen de $\beta$, $\zeta$ y $\omega_n$ de tal forma que si $frac{r1}{\omega_n}$, $frac{r2}{\omega_n^2}$, $frac{r3}{\omega_n}$ son independientes de $\beta_2$, como en el caso del controlador PID-D y D\textbar PID, tendremos $M_p$ independiente de $\beta$, por lo que para diseñar estos controladores se puede seguir el mismo procedimientos que para diseñar los controladores PID y los PI-D.
 
+\section{Análisis, diseño e implementación de un sistema de control de la posición angular de un motor DC, imponiendo especificaciones de régimen permanente y transitorio, utilizando un controlador D\textbar PID}
+Se va a utilizar la siguiente función de transferencia:
+\begin{equation}
+G(s)=frac{2652.28}{s(s+64.986)}
+\end{equation}
+\subsection{Análisis de estabilidad}
+Para estudiar la estabilidad del sistema primero debemos obtener el polinomio característico. Para un D\textbar PID es:
+\begin{equation}
+P(s)=s^3+(p+K K_P\tau_{D1})s^2+K K_P(s+\frac{1}{\tau_I})
+\end{equation}
+Donde:
+\begin{itemize}
+	\item $p$ es el polo del motor
+	\item $K=K'/R$ con $R=23.04$ de la reductora
+	\item $K_P$ es la constante de la rama proporcional
+	\item $\tau_{D1}$ es la constante de tiempo derivativa de la rama principal
+	\item $\tau_I$ es la constante de tiempo integral
+\end{itemize}
+
+Con el polinomio característico construimos la tabla de Routh:
+\begin{figure}[!h]
+	\begin{center}
+		\large
+		\begin{tabular}{|c c c|}
+			\hline 
+			$s^3:$ & 1 & $K K_P$ \\ 
+			\hline 
+			$s^2:$ & $p+K K_P \tau_{D1}$ & $\frac{K K_P}{\tau_I}$ \\ 
+			\hline 
+			$s:$ & $\frac{K K_P (p+K K_P \tau_{D1} -\frac{1}{\tau_I})}{p+K K_P \tau_{D1}}$ &  \\ 
+			\hline 
+			$s^0:$ & $\frac{K K_P}{\tau_I}$ &  \\ 
+			\hline 
+		\end{tabular}
+	\caption{Tabla de Routh de D\textbar PID}
+	\label{tabla1}
+	\end{center}
+\end{figure}
+
+La condición necesaria para que el sistema sea estable es que no debe haber cambios de signo en la primera columna de la Tabla de Routh (Figura \ref{tabla1}). Analizando los términos de la tabla se llegan a las siguientes condiciones:
+
+Como $1$ es positivo, por lo que el resto de parámetros deben ser positivos.
+\begin{equation}
+	p+K K_P \tau_{D1}>0
+\end{equation}
+Reorganizando, 
+\begin{equation}
+	-\frac{p}{K}<K_P \tau_{D1}
+\end{equation}
+También debe cumplirse
+\begin{equation}
+	\frac{K K_P (p+K K_P \tau_{D1} -\frac{1}{\tau_I})}{p+K K_P \tau_{D1}} > 0
+\end{equation}
+O lo que es lo mismo,
+\begin{equation}
+	\frac{1}{\tau_I} > p+K K_P \tau_{D1}
+\end{equation}
+Además se debe cumplir $\tau_I > 0$.
+
+\subsection{Problema de seguimiento de las señales escalón, rampa y parábola}
+La función de transferencia del controlador D\textbar PID tiene en su numerador un subpolinomio completo del denominador de grado 1. Por lo tanto, resuelve el problema de seguimiento para las funciones de grado $q<2$, es decir, para el escalón y la rampa.
+
+Para comprobar que el controlador resuelve el problema de seguimiento para una señal determinada $R(s)$, se aplica el teorema del valor final sobre la señal de error del sistema.
+La función de transferencia del error es,
+\begin{equation}
+	H_{e, D|PID}(s)=\frac{s^2(s+p-K K_P \tau_{D2})}{s^2(s+p)+K K_P \tau_{D1}(s^2+\frac{s}{\tau_{D1}}+\frac{1}{\tau_{D1} \tau_I})}
+\end{equation}
+
+Y tras aplicarle el teorema del valor final se obtiene:
+\begin{equation}
+	e(\infty)=\lim_{s \rightarrow 0}
+	s H_{e, D|PID}(s) R(s)
+\end{equation}
+
+El límite tiende a 0 cuando $R(s)=\frac{1}{s}$ y para $R(s)=\frac{1}{s^2}$. Para que este error sea $0$ cuando $R(s)=\frac{1}{s^3}$, se debe cumplir la siguiente condición:
+\begin{equation}
+K_P \tau_{D2} = \frac{p}{K}
+\end{equation}
+
 \begin{thebibliography}{9}
 \bibitem{git} \href{https://github.com/avicarioe/telelabo}{Repositorio del proyecto alojado en GitHub}
 \bibitem{design} Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;
 \href{http://www.robolabo.etsit.upm.es/asignaturas/seco/apuntes/design.pdf}{Diseño}
 
 \end{thebibliography}
+
+
+
+
 
 
 \end{document}
