@@ -2,12 +2,12 @@ clear
 %Datos
 K=2652.28/23.04;
 p=64.986;
-Tm=0.002;
+Tm=0.005;
 
 %Valores dados
-zeta=0.5;
-beta=10;
-beta2=5;
+zeta=0.7;
+beta=15;
+beta2=3.5;
 
 %Cálculo de variables
 KP=(p^2*(2*beta+(1/zeta^2)))/(beta2^2*K)

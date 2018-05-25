@@ -11,8 +11,8 @@ K=2652.28;
 p=64.986;
 
 %Valores dados
-zetas=[0.6 0.65 0.7];
-beta2=3.5;
+zetas=[0.6 0.7 0.8 0.9];
+beta2=0.5;
 
 %Código
 beta=0:50;

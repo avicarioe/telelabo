@@ -11,8 +11,8 @@ K=2652.28;
 p=64.986;
 
 %Valores dados
-zetas=[0.6 0.65 0.707 0.6 0.65 0.707];
-betas=[23 22 21.5 14.5 14 13];
+zetas=0.5;
+betas=15;
 
 %Código
 beta2=linspace(0,120,50);
