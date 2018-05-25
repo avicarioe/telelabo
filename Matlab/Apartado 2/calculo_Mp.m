@@ -13,9 +13,10 @@ p=64.986;
 %Valores dados
 zetas=[0.6 0.7 0.8 0.9];
 beta2=0.5;
+length=500;
 
 %Código
-beta=0:50;
+beta=linspace(0,50,length);
 Mp=[];
 for zeta=zetas
     omegan=p/(beta2*zeta);
@@ -23,8 +24,8 @@ for zeta=zetas
     r1=(zeta*omegan*(beta*(1/(zeta^2)-4)+2/(zeta^2)))./Q;
     r2=(omegan^2*(1/(zeta^2)-2*beta))./Q;
     r3=(beta.^3*zeta*omegan)./Q;
-    Mpz=zeros(1,50);
-    for i=1:51
+    Mpz=zeros(1,length);
+    for i=1:length
         num1=[r1(i) r2(i)];
         den1= [1 2*zeta*omegan omegan^2];
         Hf1=tf(num1,den1);
@@ -40,5 +41,9 @@ end
 plot(beta, Mp')
 hold on
 refline([0, Mp_max])
-refline([0, Mp_min])
+refline([0, Mp_min]),
+title('Sobreelongación máxima de y(t) de un D|PID')
+legend('\zeta=0.6','\zeta=0.7','\zeta=0.8','\zeta=0.9', 'Location', 'northeast')
+xlabel('\beta')
+ylabel('M_p')
 hold off

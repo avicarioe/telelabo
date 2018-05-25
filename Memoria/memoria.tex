@@ -204,6 +204,23 @@ Con este código y viendo las gráficas anteriores, se han obtenido los siguient
 	\end{tabular} 
 \end{center}
 
+A partir de estos datos se pueden obtener $K_P$, $\tau_{D1}$, $\tau_{D2}$ y $\tau_I$ como se pide en el ejercicio, utilizando para ello las relaciones que se proporcionan en el documento de la asignatura:
+
+
+
+asslsdjfklasjdfñl
+
+
+
+\begin{center}
+	\begin{tabular}{c|c}
+		$K_P$ & 95.9556 \\ 
+		$\tau_I$ & 0.0564 \\ 
+		$\tau_{D1}$ & 0.0227 \\ 
+		$\tau_{D2}$ & 0.0059 \\ 
+	\end{tabular} 
+\end{center}
+
 Para asegurar la validez de estos datos, se va a analizar la estabilidad del sistema a través de método de la tabla de Routh, descrito en el apartado \ref{estabilidad}.
 Calculando, en la ecuación \ref{eq:2}:	
 \begin{equation}
@@ -219,7 +236,27 @@ Además, se cumple que $\tau_I > 0 \Rightarrow 0.0564>0$.
 
 Como se aprecia, todas las condiciones se cumplen, por lo que el sistema es obviamente estable y los valores obtenidos son válidos.
 
-Ahora se pueden obtener los valores de los parámetros que se piden en el enunciado.
+\subsection{Prueba del sistema diseñado en Telelabo}
+Para realizar las pruebas del sistema, primero se han tenido que calcular los valores de los parámetros para introducirlos en el programa. Estos también se han calculado en Matlab, utilizando las siguientes relaciones:
+\begin{equation}
+K_I=\frac{K_p}{\tau_I} T_s
+\end{equation}
+\begin{equation}
+K_{Di}=\frac{K_P \tau_{Di}}{T_s}, i=1,2
+\end{equation}
+En las pruebas se ha usado un valor de periodo de muestreo $T_s=5$.
+
+Los valores obtenidos son:
+\begin{center}
+	\begin{tabular}{c|c}
+		$K_P$ & 95.9556 \\ 
+		$K_I$ & 8.5111 \\ 
+		$K_{D1}$ & 435.4904 \\ 
+		$K_{D2}$ & 112.9049 \\
+	\end{tabular} 
+\end{center}
+
+Se han realizado pruebas para diferentes entradas: escalón, rampa y parábola.
 
 
 
