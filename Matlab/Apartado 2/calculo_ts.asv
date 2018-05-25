@@ -15,11 +15,11 @@ zetas=[0.6 0.65 0.707 0.6 0.65 0.707];
 betas=[23 22 21.5 14.5 14 13];
 
 %Código
-beta2=linspace(0,120,50);
+beta2=linspace(0,20,50);
 ts=[];
 for j=1:length(zetas)
-    zeta=zetas(j);
-    beta=betas(j);
+    zeta=zetas(i);
+    beta=betas(i);
     omegan=p./(beta2*zeta);
     Q=beta^2-2*beta+1/(zeta^2);
     r1=(zeta*omegan*(beta*(1/(zeta^2)-4)+2/(zeta^2)))./Q;

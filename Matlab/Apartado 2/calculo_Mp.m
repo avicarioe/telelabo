@@ -1,3 +1,4 @@
+clear
 %Valores deseados
 Mp_max=0.12;
 Mp_min=0.05;
@@ -10,7 +11,7 @@ K=2652.28;
 p=64.986;
 
 %Valores dados
-zetas=[0.2 0.4 0.6 0.8];
+zetas=[0.6 0.65 0.7];
 beta2=3.5;
 
 %Código
