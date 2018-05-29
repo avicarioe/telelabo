@@ -102,7 +102,7 @@ Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$
 \section{Análisis, diseño e implementación de un sistema de control de la posición angular de un motor DC, imponiendo especificaciones de régimen permanente y transitorio, utilizando un controlador D\textbar PID}
 Se va a utilizar la siguiente función de transferencia:
 \begin{equation}
-G(s)=frac{2652.28}{s(s+64.986)}
+G(s)=\frac{2652.28}{s(s+64.986)}
 \end{equation}
 \subsection{Análisis de estabilidad \label{estabilidad}} 
 Para estudiar la estabilidad del sistema primero debemos obtener el polinomio característico. Para un D\textbar PID es:
@@ -258,6 +258,24 @@ Los valores obtenidos son:
 
 Se han realizado pruebas para diferentes entradas: escalón, rampa y parábola.
 
+METER IMÁGENES Y DESCRIPCIONES
+
+\section{Análisis, diseño de un controlador PID en el lazo directo sintonizado en el dominio de la frecuencia mediante el método de Ziegler-Nichols Modificado}
+Se utiliza la función de transferencia:
+\begin{equation}
+G(s)=\frac{22233201,58}{s(s+8382,70)(s+64.986)}
+\end{equation}
+\subsection{Análisis del motor en el Dominio de la Frecuencia}
+Para realizar este análisis se ha obtenido el diagrama de Bode y el diagrama de Nyquist en Matlab. Se añaden a continuación:
+
+En el diagrama de Bode se pueden se han marcado de forma aproximada los dos polos.
+
+En el diagrama de Nyquist se puede apreciar como en el origen hay un valor de ganancia infinita y una fase de -90\degree debido al primer polo de la función de transferencia. Esto es así debido a que cuando se analiza la posición angular del motor, este se comporta como un sistema integrador. Después, a medida que aumenta la frecuencia, la ganancia disminuye hasta que se llega al polo, donde la fase se ha retrasado 45\degree más. Cuando se produce el cruce con el eje, hay -180\degree en la fase, que se corresponden con una década más. Después de este primer polo, el módulo de la función de transferencia disminuye más rápido, por lo que aumenta aún más la curvatura del diagrama hacia el origen. Al haber otro polo más, el diagrama pasa por debajo del eje real ya que este está situado en -235\degree. Este polo provoca que la función de transferencia en el infinito tenga una fase de -270\degree.
+
+Como se puede apreciar estamos ante un sistema integrador que sería inestable frente a una referencia en lazo abierto. En ese caso, si se introduce una señal de referencia constante la salida crecería hacia el infinito de forma descontrolada. Por eso es necesario un sistema de lazo cerrado.
+
+\subsection{Diseñar un controlador mediante el método de Ziegler-Nichols Modificado}
+Desde el punto de vista de la frecuencia, un controlador PID desplaza los puntos del diagrama de Nyquist de tal forma que ajustando sus valores se puede variar el diagrama de Nyquist y por lo tanto los parámetros que forman el mismo para conseguir el sistema deseado.
 
 
 
@@ -266,6 +284,8 @@ Se han realizado pruebas para diferentes entradas: escalón, rampa y parábola.
 \bibitem{design} Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;
 \href{http://www.robolabo.etsit.upm.es/asignaturas/seco/apuntes/design.pdf}{Diseño}
 \bibitem{routh} John Wiley \& Sons, Inc; Norman S. Nise. Control Systems Engineering.
+\bibitem{frecuencia} Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;
+\href{Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;} {Frecuencia}
 
 
 \end{thebibliography}
