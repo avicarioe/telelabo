@@ -16,7 +16,7 @@ tauD2=p/(K*KP);
 tauI=(beta2*amort^2*(2*beta+(1/amort^2)))/(beta*p);
 
 tauD=tauD1+tauD2;
- 
+
 KI=KP*Tm/tauI
 KD1=KP*tauD1/Tm
 KD2=KP*tauD2/Tm
@@ -29,5 +29,3 @@ step(Hf);
 Hf = hf_from_pid (KP, tauI, tauD1, tauD2, K, p);
 figure
 step(Hf);
-
-

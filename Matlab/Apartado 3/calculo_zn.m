@@ -1,7 +1,7 @@
 clear
 close all
 % Datos del motor
-K = 22233201.58;
+K = 22233201.58/23;
 p1 = 64.986;
 p2 = 8382.70;
 
@@ -20,7 +20,7 @@ step(Hs)
 
 % Punto origen
 modHw = @(w) abs(freqresp(Hf,w))-1;
-w0 = fsolve(modHw, 20);
+w0 = fsolve(modHw, 2);
 
 A = freqresp(Hf,w0);
 rA = abs(A);
@@ -28,7 +28,7 @@ phaA = 2*pi+angle(A);
 
 % Punto destino
 rB = 1;
-phaB = pi+50*pi/180;
+phaB = pi+30*pi/180;
 
 % Cálculo de parámetros
 alpha = 0.25;
@@ -48,3 +48,16 @@ step(Hfb);
 % Lazo abierto modificado
 figure
 nyquist(Hf*Hc);
+
+% Cálculo de parámetros
+Tm = 0.005;
+
+KI=KP*Tm/tauI;
+KD=KP*tauD/Tm;
+
+fprintf("KP=%f\nKI=%f\nKD=%f\n",KP, KI, KD)
+
+t = 0:0.01:pi/w0*2*10;
+u = sin(w0*t);
+figure
+lsim(Hfb,u,t)

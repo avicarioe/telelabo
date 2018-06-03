@@ -285,17 +285,53 @@ H_{CL}(s)=\frac{G(s)}{1 + G(s)}
 \end{equation}
 
 A la vista de los resultados de esta simulación y del sistema conseguido en la sección \ref{sec:pruebas} se van a escoger los siguientes parámetros de diseño
-... margen de fase 30\degree ?? ... además, para que sea necesario el sistema completo PID, se desea que el error frente a una perturbación constante sea nulo.
+... margen de fase 30\degree (explicación)?? ... además, para que sea necesario el sistema completo PID, se desea que el error frente a una perturbación constante sea nulo.
 
 Para cumplir estas especificaciones se va a elegir el punto de corte del diagrama de Nyquist del motor en lazo abierto con la circunferencia unidad, $A=G(j\omega_0)$,
-con $\omega_0 = 35.7572 rad/s$ y se va a desplazar al punto $B=G_c(j\omega_0) G(j\omega_0)$, que también corta la circunferencia unidad pero en el punto donde $M.F. = 30\degree$.
+con $\omega_0 = ?? rad/s$ y se va a desplazar al punto $B=G_C(j\omega_0) G(j\omega_0)$, que también corta la circunferencia unidad pero en el punto donde $M.F. = 30\degree$.
 
 \begin{equation}
 LLAVE CON LOS PUNTOS
 \end{equation}
 
+Para realizar estas transformaciones se usan las ecuaciones para un sistema PID descritas por el método de Ziegler-Nichols modificado.
 
+\begin{equation}
+eq Ziegler-Nichols PID
+\end{equation}
 
+Si se elige aleatoriamente una $\alpha = ??$ se obtienen los siguientes parámetros:
+
+\begin{equation}
+KP,\tau_I,\tau_D
+\end{equation}
+
+Con estos parámetros se puede describir el sistema en lazo cerrado:
+
+\begin{equation}
+G_C(s)=K_P (1 + s \tau_D + \frac{1}{s\tau_I})
+\end{equation}
+
+\begin{equation}
+H(s)=\frac{G_C(s) G(s)}{1 + G_C(s) G(s)}
+\end{equation}
+
+Cuyo diagrama de Nyquist y respuesta al escalon se puede ver en la figura \ref{fig:sim} y se pueden comprobar que $M_P=??$ y $t_s=??$, cumpliendo las especificaciones de diseño. Además se obtiene el $M.F. = 30\degree$ deseado y un margen de ganancia infinito.
+
+FIGURA CON DIAGRAMA DE NYQUIST DE Gc*G Y step
+
+\subsection{Prueba del sistema diseñado en Telelabo}
+
+Igual que en el otro ejercicio se calculan KP, KI y KD y se meten las imágenes
+
+Se pone tambien la respuesta a un seno de w0 para ver la fase
+
+\section{Conclusiones}
+
+?????????????????
+no idealidades del motor
+dependencia con el tiempo de muestreo
+la reductora??
 
 
 \begin{thebibliography}{9}
@@ -304,7 +340,7 @@ LLAVE CON LOS PUNTOS
 \href{http://www.robolabo.etsit.upm.es/asignaturas/seco/apuntes/design.pdf}{Diseño}
 \bibitem{routh} John Wiley \& Sons, Inc; Norman S. Nise. Control Systems Engineering.
 \bibitem{frecuencia} Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;
-\href{Félix Monasterio-Huelin y Álvaro Gutiérrez Martín;} {Frecuencia}
+\href{http://robolabo.etsit.upm.es/asignaturas/seco/apuntes/frecuencia.pdf} {Frecuencia}
 
 
 \end{thebibliography}
