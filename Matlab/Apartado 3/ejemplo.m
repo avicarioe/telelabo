@@ -1,6 +1,7 @@
-num = 1;
-den = [1 3/2 3/8+1/2 1/8];
-Hf = tf(num, den);
+close all
+clear
+
+Hf = tf(1,[1 1])*tf(1,[1 0.5])*tf(1,[1 0.25]);
 nyquist(Hf);
 
 Hs = Hf/(1+Hf);
@@ -8,11 +9,10 @@ figure
 step(Hs)
 
 % Punto origen
-Hw = @(w) 1/((j*w+1)*(j*w+0.5)*(j*w+1/4));
-modHw = @(w) abs(Hw(w))-1;
+modHw = @(w) abs(freqresp(Hf,w))-1;
 w0 = fsolve(modHw, 0.8);
 
-A = Hw(w0);
+A = freqresp(Hf,w0);
 rA = abs(A);
 phaA = pi+angle(A);
 
@@ -24,14 +24,20 @@ phaB = 50*pi/180;
 alpha = 0.25;
 rC = rB/rA;
 phaC = phaB - phaA;
+
 KP = rC*cos(phaC);
-tauI = 1/(2*w0*alpha)*(tan(phaC)+sqrt(4*alpha+tan(phaC)^2));
+tauI = (1/(2*w0*alpha))*(tan(phaC)+sqrt(4*alpha+tan(phaC)^2));
 tauD = alpha*tauI;
 
 % Representación del lazo cerrado
-Hc = KP*(1 + tf([tauD 0],1) + tf(1, [tauI 0]));
-Hfb = Hc*Hf/(1+Hc*Hf);
+%Hc = KP*(1 + tf([tauD 0],1) + tf(1, [tauI 0]));
+%Hfb = (Hc*Hf)/(1+(Hc*Hf));
+num = KP*[tauD 1 1/tauI];
+den = [1 7/4 7/8+tauD*KP 1/8+KP KP/tauI];
+Hfb = tf(num, den);
 figure
 step(Hfb);
+
+% Lazo abierto modificado
 figure
-nyquist(Hf);
+nyquist(Hfb);

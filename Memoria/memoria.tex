@@ -5,6 +5,7 @@
 \usepackage[pdftex]{color,graphicx}
 \usepackage{caption}
 \usepackage{amsmath}
+\usepackage{gensymb}
 
 \usepackage[pdftex,
 	colorlinks=true,
@@ -43,7 +44,7 @@ Siendo $e(s)$ el error en la salida cuando en la entrada tenemos la función esc
 Los controladores de tercer grado con un grado de libertad, que son PI, PID, PI-D, tienen un subpolinomio completo del denominador de grado $n_s=1$, por lo que además de poder resolver el problema de seguimiento con la señal escalón, también lo podrán resolver con la señal rampa. Es decir, lo podrán resolver para señales monómicas de grado $q<2$.
 \begin{equation}
 e(\infty)=\lim_{s \rightarrow 0}
-s H(s) R(s) = 0, \textrm{con grado de } R(s)<2. 
+s H(s) R(s) = 0, \textrm{con grado de } R(s)<2.
 \end{equation}
 
 Para los sistemas de dos grados de libertad estudiados existen dos posibilidades. En el sistema PID-D, al ser una generalización de los sistemas de tercer orden ya estudiados posee las mismas propiedades en el sentido del seguimiento de señales de referencia monómicas, es decir, hay error nulo para la rampa y error finito para la parábola. Pero si este sistema cumple la siguiente condición:
@@ -104,7 +105,7 @@ Se va a utilizar la siguiente función de transferencia:
 \begin{equation}
 G(s)=\frac{2652.28}{s(s+64.986)}
 \end{equation}
-\subsection{Análisis de estabilidad \label{estabilidad}} 
+\subsection{Análisis de estabilidad \label{estabilidad}}
 Para estudiar la estabilidad del sistema primero debemos obtener el polinomio característico. Para un D\textbar PID es:
 \begin{equation}
 P(s)=s^3+(p+K K_P\tau_{D1})s^2+K K_P(s+\frac{1}{\tau_I})
@@ -134,7 +135,7 @@ Como 1 es positivo, por lo que el resto de parámetros deben ser positivos.
 \begin{equation}
 	p+K K_P \tau_{D1}>0
 \end{equation}
-Reorganizando, 
+Reorganizando,
 \begin{equation}
 	-\frac{p}{K}<K_P \tau_{D1}
 	\label{eq:2}
@@ -198,10 +199,10 @@ Con este código y viendo las gráficas anteriores, se han obtenido los siguient
 
 \begin{center}
 	\begin{tabular}{c|c}
-			$\beta$ & 15 \\ 
-			$\beta_2$ & 3.5 \\ 
-			$\zeta$ & 0.7 \\ 
-	\end{tabular} 
+			$\beta$ & 15 \\
+			$\beta_2$ & 3.5 \\
+			$\zeta$ & 0.7 \\
+	\end{tabular}
 \end{center}
 
 A partir de estos datos se pueden obtener $K_P$, $\tau_{D1}$, $\tau_{D2}$ y $\tau_I$ como se pide en el ejercicio, utilizando para ello las relaciones que se proporcionan en el documento de la asignatura:
@@ -214,17 +215,17 @@ asslsdjfklasjdfñl
 
 \begin{center}
 	\begin{tabular}{c|c}
-		$K_P$ & 95.9556 \\ 
-		$\tau_I$ & 0.0564 \\ 
-		$\tau_{D1}$ & 0.0227 \\ 
-		$\tau_{D2}$ & 0.0059 \\ 
-	\end{tabular} 
+		$K_P$ & 95.9556 \\
+		$\tau_I$ & 0.0564 \\
+		$\tau_{D1}$ & 0.0227 \\
+		$\tau_{D2}$ & 0.0059 \\
+	\end{tabular}
 \end{center}
 
 Para asegurar la validez de estos datos, se va a analizar la estabilidad del sistema a través de método de la tabla de Routh, descrito en el apartado \ref{estabilidad}.
-Calculando, en la ecuación \ref{eq:2}:	
+Calculando, en la ecuación \ref{eq:2}:
 \begin{equation}
-	-\frac{64.986}{2652.28}< 95.9556\cdot0.0227 \Rightarrow 
+	-\frac{64.986}{2652.28}< 95.9556\cdot0.0227 \Rightarrow
 	-0.0245<2.178
 \end{equation}
 En la ecuación \ref{eq:3}:
@@ -236,7 +237,7 @@ Además, se cumple que $\tau_I > 0 \Rightarrow 0.0564>0$.
 
 Como se aprecia, todas las condiciones se cumplen, por lo que el sistema es obviamente estable y los valores obtenidos son válidos.
 
-\subsection{Prueba del sistema diseñado en Telelabo}
+\subsection{Prueba del sistema diseñado en Telelabo \label{sec:pruebas}}
 Para realizar las pruebas del sistema, primero se han tenido que calcular los valores de los parámetros para introducirlos en el programa. Estos también se han calculado en Matlab, utilizando las siguientes relaciones:
 \begin{equation}
 K_I=\frac{K_p}{\tau_I} T_s
@@ -249,11 +250,11 @@ En las pruebas se ha usado un valor de periodo de muestreo $T_s=5$.
 Los valores obtenidos son:
 \begin{center}
 	\begin{tabular}{c|c}
-		$K_P$ & 95.9556 \\ 
-		$K_I$ & 8.5111 \\ 
-		$K_{D1}$ & 435.4904 \\ 
+		$K_P$ & 95.9556 \\
+		$K_I$ & 8.5111 \\
+		$K_{D1}$ & 435.4904 \\
 		$K_{D2}$ & 112.9049 \\
-	\end{tabular} 
+	\end{tabular}
 \end{center}
 
 Se han realizado pruebas para diferentes entradas: escalón, rampa y parábola.
@@ -276,6 +277,24 @@ Como se puede apreciar estamos ante un sistema integrador que sería inestable f
 
 \subsection{Diseñar un controlador mediante el método de Ziegler-Nichols Modificado}
 Desde el punto de vista de la frecuencia, un controlador PID desplaza los puntos del diagrama de Nyquist de tal forma que ajustando sus valores se puede variar el diagrama de Nyquist y por lo tanto los parámetros que forman el mismo para conseguir el sistema deseado.
+
+Se puede estudiar el comportamiento del motor en lazo cerrado, descrito en la siguiente ecuación, cuyo resultado se muestra en la figura \ref{fig:cl}.
+
+\begin{equation}
+H_{CL}(s)=\frac{G(s)}{1 + G(s)}
+\end{equation}
+
+A la vista de los resultados de esta simulación y del sistema conseguido en la sección \ref{sec:pruebas} se van a escoger los siguientes parámetros de diseño
+... margen de fase 30\degree ?? ... además, para que sea necesario el sistema completo PID, se desea que el error frente a una perturbación constante sea nulo.
+
+Para cumplir estas especificaciones se va a elegir el punto de corte del diagrama de Nyquist del motor en lazo abierto con la circunferencia unidad, $A=G(j\omega_0)$,
+con $\omega_0 = 35.7572 rad/s$ y se va a desplazar al punto $B=G_c(j\omega_0) G(j\omega_0)$, que también corta la circunferencia unidad pero en el punto donde $M.F. = 30\degree$.
+
+\begin{equation}
+LLAVE CON LOS PUNTOS
+\end{equation}
+
+
 
 
 

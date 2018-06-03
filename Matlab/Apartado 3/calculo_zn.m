@@ -19,17 +19,16 @@ figure
 step(Hs)
 
 % Punto origen
-Hw = @(w) K/(j*w*(j*w+p1)*(j*w+p2));
-modHw = @(w) abs(Hw(w))-1;
+modHw = @(w) abs(freqresp(Hf,w))-1;
 w0 = fsolve(modHw, 20);
 
-A = Hw(w0);
+A = freqresp(Hf,w0);
 rA = abs(A);
-phaA = pi+angle(A);
+phaA = 2*pi+angle(A);
 
 % Punto destino
 rB = 1;
-phaB = 50*pi/180;
+phaB = pi+50*pi/180;
 
 % Cálculo de parámetros
 alpha = 0.25;
@@ -45,5 +44,7 @@ Hc = KP*(1 + tf([tauD 0],1) + tf(1, [tauI 0]));
 Hfb = Hc*Hf/(1+Hc*Hf);
 figure
 step(Hfb);
+
+% Lazo abierto modificado
 figure
-nyquist(Hf);
+nyquist(Hf*Hc);
