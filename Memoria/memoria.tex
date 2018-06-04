@@ -6,6 +6,7 @@
 \usepackage{caption}
 \usepackage{amsmath}
 \usepackage{gensymb}
+\usepackage{subcaption}
 
 \usepackage[pdftex,
 	colorlinks=true,
@@ -173,7 +174,7 @@ K_P \tau_{D2} = \frac{p}{K}
 
 \subsection{Cálculo de los parámetros del controlador según las condiciones dadas}
 Puesto que la sobreelongación máxima $M_p$ es independiente de $\beta_2$, primeramente se va seleccionar un valor de $\beta_2$ y de $\zeta$ que cumpla con las especificaciones pedidas.
-Para realizar este apartado se ha creado un código en Matlab que, dados unos valores de $\zeta$ y $\beta$, calcula la sobreelongación máxima a partir de la función de transferencia del sistema que se da en la documentación de la asignatura:
+Para realizar este apartado se ha creado un código en Matlab que, dados unos valores de $\zeta$ y $\beta$, calcula la sobreelongación máxima a partir de la función de transferencia del sistema (Figura \ref{fig:mp}) que se da en la documentación de la asignatura:
 
 \begin{equation}
 	H_{D|PID}(s)=\frac{r_1 s r_2+}{s^2 + 2\zeta \omega_n s} + \frac{r_3}{s+ \beta \zeta \omega_n}
@@ -191,9 +192,26 @@ Para realizar este apartado se ha creado un código en Matlab que, dados unos va
 	\end{equation}
 \end{subequations}
 Donde $Q(\beta)=\beta^2-2 \beta + \frac{1}{\zeta^2}$.
-Se muestran los resultados en la figura X.
 
-Una vez se han obtenido unos valores de $\zeta$ y $\beta$ que cumplan las especificaciones, se ha creado un código para calcular el tiempo de estabilización $t_s$ según el valor de $beta_2$ y la tolerancia $\nu$, y el resultado se muestra en la figura Y.
+\begin{figure*}[htp]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[height=1.2in]{Mp}
+		\caption{Relación entre $Mp$ y $\beta$}
+		\label{fig:mp}
+	\end{subfigure}
+
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\includegraphics[height=1.2in]{ts}
+		\caption{Relación entre $t_s$ y $\beta_2$}
+		\label{fig:ts}
+	\end{subfigure}
+	\caption{}
+\end{figure*}
+
+Una vez se han obtenido unos valores de $\zeta$ y $\beta$ que cumplan las especificaciones, se ha creado un código para calcular el tiempo de estabilización $t_s$ según el valor de $beta_2$ y la tolerancia $\nu$, y el resultado se muestra en la Figura \ref{fig:ts}.
 
 Con este código y viendo las gráficas anteriores, se han obtenido los siguientes valores para los parámetros:
 
@@ -269,7 +287,7 @@ G(s)=\frac{22233201,58}{s(s+8382,70)(s+64.986)}
 \subsection{Análisis del motor en el Dominio de la Frecuencia}
 Para realizar este análisis se ha obtenido el diagrama de Bode y el diagrama de Nyquist en Matlab. Se añaden a continuación:
 
-En el diagrama de Bode se pueden se han marcado de forma aproximada los dos polos.
+En el diagrama de Bode se han marcado de forma aproximada los dos polos.
 
 En el diagrama de Nyquist se puede apreciar como en el origen hay un valor de ganancia infinita y una fase de -90\degree debido al primer polo de la función de transferencia. Esto es así debido a que cuando se analiza la posición angular del motor, este se comporta como un sistema integrador. Después, a medida que aumenta la frecuencia, la ganancia disminuye hasta que se llega al polo, donde la fase se ha retrasado 45\degree más. Cuando se produce el cruce con el eje, hay -180\degree en la fase, que se corresponden con una década más. Después de este primer polo, el módulo de la función de transferencia disminuye más rápido, por lo que aumenta aún más la curvatura del diagrama hacia el origen. Al haber otro polo más, el diagrama pasa por debajo del eje real ya que este está situado en -235\degree. Este polo provoca que la función de transferencia en el infinito tenga una fase de -270\degree.
 
