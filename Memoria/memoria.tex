@@ -100,7 +100,7 @@ Ya que estos controladores no se pueden analizar de forma matemática es importa
 \subsubsection{Controladores PID-D y D\textbar PID}
 Como los controladores PID-D son una generalización de los controladores PID y PI-D, para los que con $\tau_{D1}=0$ se obtiene un sistema PI-D y con $\tau_{D2}=0$ se obtiene un sistema PID.
 
-Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$ que son funciones que dependen de $\beta$, $\zeta$ y $\omega_n$ de tal forma que si $frac{r1}{\omega_n}$, $frac{r2}{\omega_n^2}$, $frac{r3}{\omega_n}$ son independientes de $\beta_2$, como en el caso del controlador PID-D y D\textbar PID, tendremos $M_p$ independiente de $\beta$, por lo que para diseñar estos controladores se puede seguir el mismo procedimientos que para diseñar los controladores PID y los PI-D.
+Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$ que son funciones que dependen de $\beta$, $\zeta$ y $\omega_n$ de tal forma que si $frac{r1}{\omega_n}$, $\frac{r2}{\omega_n^2}$, $frac{r3}{\omega_n}$ son independientes de $\beta_2$, como en el caso del controlador PID-D y D\textbar PID, tendremos $M_p$ independiente de $\beta$, por lo que para diseñar estos controladores se puede seguir el mismo procedimientos que para diseñar los controladores PID y los PI-D.
 
 \section{Análisis, diseño e implementación de un sistema de control de la posición angular de un motor DC, imponiendo especificaciones de régimen permanente y transitorio, utilizando un controlador D\textbar PID}
 Se va a utilizar la siguiente función de transferencia:
@@ -174,7 +174,7 @@ K_P \tau_{D2} = \frac{p}{K}
 \end{equation}
 
 \subsection{Cálculo de los parámetros del controlador según las condiciones dadas}
-Puesto que la sobreelongación máxima $M_p$ es independiente de $\beta_2$, primeramente se va seleccionar un valor de $\beta_2$ y de $\zeta$ que cumpla con las especificaciones pedidas.
+Puesto que la sobreelongación máxima $M_p$ es independiente de $\beta_2$, en primer lugar se va seleccionar un valor de $\beta_2$ y de $\zeta$ que cumpla con las especificaciones pedidas.
 Para realizar este apartado se ha creado un código en Matlab que, dados unos valores de $\zeta$ y $\beta$, calcula la sobreelongación máxima a partir de la función de transferencia del sistema (Figura \ref{fig:mp}) que se da en la documentación de la asignatura:
 
 \begin{equation}
@@ -193,6 +193,7 @@ Para realizar este apartado se ha creado un código en Matlab que, dados unos va
 	\end{equation}
 \end{subequations}
 Donde $Q(\beta)=\beta^2-2 \beta + \frac{1}{\zeta^2}$.
+
 
 \begin{figure*}[htp]
 	\begin{center}
@@ -225,12 +226,7 @@ Con este código y viendo las gráficas anteriores, se han elegido los valores q
 	\end{tabular}
 \end{center}
 
-A partir de estos datos se pueden obtener $K_P$, $\tau_{D1}$, $\tau_{D2}$ y $\tau_I$ como se pide en el ejercicio, utilizando para ello las relaciones que se proporcionan en el documento de la asignatura:
-
-
-
-asslsdjfklasjdfñl
-
+A partir de estos datos se pueden obtener $K_P$, $\tau_{D1}$, $\tau_{D2}$ y $\tau_I$ como se pide en el ejercicio, utilizando para ello las relaciones que se proporcionan en el documento de la asignatura.
 
 
 \begin{center}
@@ -315,7 +311,7 @@ Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_
 			\centering
 			\includegraphics[width=12cm]{escalon_Mp2}
 			\caption{Detalle valor de $M_P$}
-			\label{mp}
+			\label{fig:mp2}
 		\end{subfigure}
 		
 		\begin{subfigure}{1\textwidth}
@@ -329,7 +325,7 @@ Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_
 	\end{figure*}
 \end{center}
 
-De la figura \ref{mp} se obtiene el valor de la sobreelongación máxima, que es aproximadamente $M_P=1.114$. El tiempo de subida y el tiempo de estabilización, $t_r=0.081 s$ y $t_s=0.185 s$, que se obtienen de la figura \ref{fig:tr}.
+De la figura \ref{fig:mp2} se obtiene el valor de la sobreelongación máxima, que es aproximadamente $M_P=1.114$. El tiempo de subida y el tiempo de estabilización, $t_r=0.081 s$ y $t_s=0.185 s$, que se obtienen de la figura \ref{fig:tr}.
 
 Los valores obtenidos cumplen con las especificaciones que se piden en el ejercicio, aunque difieren ligeramente de los valores calculados teóricamente y mediante simulaciones. Esto probablemente se deba a las no linealidades del motor, rozamiento, saturación del controlador y la dependencia con el periodo de muestreo.
 
@@ -359,8 +355,7 @@ Para realizar este análisis se ha obtenido el diagrama de Bode y el diagrama de
 	\end{figure*}
 \end{center}
 
-
-En el diagrama de Nyquist se puede apreciar como en el origen hay un valor de ganancia infinita y una fase de -90\degree debido al primer polo de la función de transferencia. Esto es así debido a que cuando se analiza la posición angular del motor, este se comporta como un sistema integrador. Después, a medida que aumenta la frecuencia, la ganancia disminuye hasta que se llega al polo, donde la fase se ha retrasado 45\degree más. Cuando se produce el cruce con el eje, hay -180\degree en la fase, que se corresponden con una década más. Después de este primer polo, el módulo de la función de transferencia disminuye más rápido, por lo que aumenta aún más la curvatura del diagrama hacia el origen. Al haber otro polo más, el diagrama pasa por debajo del eje real ya que este está situado en -235\degree. Este polo provoca que la función de transferencia en el infinito tenga una fase de -270\degree.
+En el diagrama de Nyquist se puede apreciar como en el origen hay un valor de ganancia infinita y una fase de -90\degree  debido al primer polo de la función de transferencia. Esto es así debido a que cuando se analiza la posición angular del motor, este se comporta como un sistema integrador. Después, a medida que aumenta la frecuencia, la ganancia disminuye hasta que se llega al polo, donde la fase se ha retrasado 45\degree  más. Cuando se produce el cruce con el eje, hay -180\degree  en la fase, que se corresponden con una década más. Después de este primer polo, el módulo de la función de transferencia disminuye más rápido, por lo que aumenta aún más la curvatura del diagrama hacia el origen. Al haber otro polo más, el diagrama pasa por debajo del eje real ya que este está situado en -235\degree. Este polo provoca que la función de transferencia en el infinito tenga una fase de -270\degree.
 
 Como se puede apreciar estamos ante un sistema integrador que sería inestable frente a una referencia en lazo abierto. En ese caso, si se introduce una señal de referencia constante la salida crecería hacia el infinito de forma descontrolada. Por eso es necesario un sistema de lazo cerrado.
 
@@ -377,7 +372,7 @@ H_{CL}(s)=\frac{G(s)}{1 + G(s)}
 	\begin{figure}
 		\centering
 		\includegraphics[width=12cm]{lazo_cerrado}
-		\caption{Respuesta del motor en lazo cerrado a un escalón unitario}
+		\caption{Respuesta del motor en lazo cerrado a un escalón unitario.}
 		\label{fig:cl}
 	\end{figure}
 \end{center}
@@ -450,12 +445,12 @@ Cuyo diagrama de Nyquist y respuesta al escalón se puede ver en la figura \ref{
 			\centering
 			\includegraphics[width=12cm]{respuesta}
 			\caption{Respuesta al escalón}
+			\label{escalonteorico}
 		\end{subfigure}
 		\caption{}
 		\label{fig:sim}
 	\end{figure*}
 \end{center}
-
 
 \subsection{Prueba del sistema diseñado en Telelabo}
 
@@ -470,6 +465,7 @@ Para calcular los parámetros que se introducen en el software del Telelabo, se 
 
 En las pruebas se ha usado un valor de periodo de muestreo $T_s=5$.
 
+
 Los valores obtenidos son:
 \begin{center}
 	\begin{tabular}{c|c}
@@ -479,16 +475,14 @@ Los valores obtenidos son:
 	\end{tabular}
 \end{center}
 
-
-Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_P$, $t_r$ y $t_s$ tras observar las gráficas de Matlab de la Figura \ref{fig:detalle} en detalle. 
-
+Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_P$, $t_r$ y $t_s$ tras observar las gráficas de Matlab de la Figura \ref{fig:detalle} en detalle.
 \begin{center}
 	\begin{figure*}[htp]
 		\begin{subfigure}{1\textwidth}
 			\centering
 			\includegraphics[width=12cm]{escalon_Mp2}
 			\caption{Detalle valor de $M_P$}
-			\label{Mp}
+			\label{mp3}
 		\end{subfigure}
 		
 		\begin{subfigure}{1\textwidth}
@@ -502,13 +496,38 @@ Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_
 	\end{figure*}
 \end{center}
 
-De la figura \ref{Mp} se obtiene el valor de la sobreelongación máxima, que es aproximadamente $M_P=1.114$. El tiempo de subida y el tiempo de estabilización, $t_r=0.081 s$ y $t_s=0.185 s$, que se obtienen de la figura \ref{fig:tr2}.
+De la figura \ref{mp3} se obtiene el valor de la sobreelongación máxima, que es aproximadamente $M_P=1.114$. El tiempo de subida y el tiempo de estabilización, $t_r=0.081 s$ y $t_s=0.185 s$, que se obtienen de la figura \ref{fig:tr2}.
 
-Los valores obtenidos cumplen con las especificaciones que se piden en el ejercicio, aunque difieren ligeramente de los valores calculados teóricamente y mediante simulaciones. Esto probablemente se deba a las no linealidades del motor, rozamiento, saturación del controlador y la dependencia con el periodo de muestreo.
+Los valores obtenidos cumplen con las especificaciones que se piden en el ejercicio, aunque difieren ligeramente de los valores calculados teóricamente y mediante simulaciones. Esto probablemente se deba a las no linealidades del motor, rozamiento, saturación del controlador y la dependencia con el periodo de muestreo. Tras realizar la simulación en Telelabo, las respuestas obtenidas son las que aparecen en la Figura \ref{real}, que ilustran este echo.
 
+
+\begin{center}
+	\begin{figure*}[htp]
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{respuesta_labo}
+			\caption{Respuesta al escalón con Telelabo}
+			\label{escalonreal}
+		\end{subfigure}
+		
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{respuesta_seno}
+			\caption{Respuesta al seno}
+			\label{seno}
+		\end{subfigure}
+		\caption{}
+		\label{real}
+	\end{figure*}
+\end{center}
+
+Como se puede apreciar al comparar la figura \ref{escalonteorico} y la figura \ref{escalonreal} existe una saturación. Además, el tiempo de estabilización es mayor en el caso del motor real. Esto también se puede apreciar en la figura \ref{seno}, donde se estudia la respuesta al seno.
 
 \section{Conclusiones}
 
+Con este trabajo se han seguido dos métodos de diseño diferentes basados en controladores: uno teniendo en cuenta el dominio de la frecuencia y otro bajo condiciones específicas de régimen permanente y transitorio.
+En ambos casos, los resultados obtenidos de forma teórica y matemática no coinciden del todo con las pruebas reales realizadas en el motor, a pesar de que cumplen con las especificaciones pedidas en el enunciado. Esto puede deberse al propio motor, ya que el rozamiento del mismo, por ejemplo, pueden afectar al valor final de las pruebas. También puede deberse a otros factores como la saturación que sufra el controlador o la dependencia que se tiene con el periodo de muestreo.
+ 
 ?????????????????
 no idealidades del motor
 dependencia con el tiempo de muestreo
