@@ -9,7 +9,7 @@ amort=0.7;
 beta=15;
 beta2=3.5;
 
-%CÃ¡lculo de variables
+%Cálculo de variables
 KP=(p^2*(2*beta+(1/amort^2)))/(beta2^2*K)
 tauD1=(beta2*(beta-beta2+2))/(p*(2*beta+(1/amort^2)));
 tauD2=p/(K*KP);
@@ -21,11 +21,11 @@ KI=KP*Tm/tauI
 KD1=KP*tauD1/Tm
 KD2=KP*tauD2/Tm
 
-%FunciÃ³n transferencia con r's
+%Función transferencia con r's
 Hf = hf_from_beta(beta, beta2, amort, p, K);
 step(Hf);
 
-%FunciÃ³n de transferencia principal
+%Función de transferencia principal
 Hf = hf_from_pid (KP, tauI, tauD1, tauD2, K, p);
 figure
 step(Hf);

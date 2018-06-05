@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{gensymb}
 \usepackage{subcaption}
+\usepackage{steinmetz}
 
 \usepackage[pdftex,
 	colorlinks=true,
@@ -114,25 +115,25 @@ P(s)=s^3+(p+K K_P\tau_{D1})s^2+K K_P(s+\frac{1}{\tau_I})
 Donde:
 \begin{itemize}
 	\item $p$ es el polo del motor
-	\item $K=K'/R$ con $R=23.04$ de la reductora
+	\item $K=K'/R$ con $R=23$ de la reductora
 	\item $K_P$ es la constante de la rama proporcional
 	\item $\tau_{D1}$ es la constante de tiempo derivativa de la rama principal
 	\item $\tau_I$ es la constante de tiempo integral
 \end{itemize}
 
 Con el polinomio característico construimos la tabla de Routh:
-
-\begin{tabular}{ccl}
-	$s^3$: & $1$ & $K K_P$ \\ \\
-	$s^2$: & $p+K K_P \tau_{D1}$ & $\displaystyle\frac{K K_P}{\tau_I}$ \\ \\
-	$s^1$: & $\displaystyle\frac{K K_P (p+K K_P \tau_{D1} -\frac{1}{\tau_I})}{p+K K_P \tau_{D1}}$ & \\ \\
-	$s^0$: & $\displaystyle\frac{K K_P}{\tau_I}$ &
-\end{tabular}
-
+\begin{center}
+	\begin{tabular}{ccl}
+		$s^3$: & $1$ & $K K_P$ \\ \\
+		$s^2$: & $p+K K_P \tau_{D1}$ & $\displaystyle\frac{K K_P}{\tau_I}$ \\ \\
+		$s^1$: & $\displaystyle\frac{K K_P (p+K K_P \tau_{D1} -\frac{1}{\tau_I})}{p+K K_P \tau_{D1}}$ & \\ \\
+		$s^0$: & $\displaystyle\frac{K K_P}{\tau_I}$ &
+	\end{tabular}
+\end{center}
 
 La condición necesaria para que el sistema sea estable es que no debe haber cambios de signo en la primera columna de la Tabla de Routh. Analizando los términos de la tabla se llegan a las siguientes condiciones.
 
-Como 1 es positivo, por lo que el resto de parámetros deben ser positivos.
+Como 1 es positivo, el resto de parámetros deben ser positivos.
 \begin{equation}
 	p+K K_P \tau_{D1}>0
 \end{equation}
@@ -194,26 +195,27 @@ Para realizar este apartado se ha creado un código en Matlab que, dados unos va
 Donde $Q(\beta)=\beta^2-2 \beta + \frac{1}{\zeta^2}$.
 
 \begin{figure*}[htp]
-	\centering
-	\begin{subfigure}[t]{0.5\textwidth}
+	\begin{center}
+	\begin{subfigure}{1\textwidth}
 		\centering
-		\includegraphics[height=1.2in]{Mp}
+		\includegraphics[width=12cm]{Mp3}
 		\caption{Relación entre $Mp$ y $\beta$}
 		\label{fig:mp}
 	\end{subfigure}
 
-	\begin{subfigure}[t]{0.5\textwidth}
+	\begin{subfigure}{1\textwidth}
 		\centering
-		\includegraphics[height=1.2in]{ts}
+		\includegraphics[width=12cm]{ts4}
 		\caption{Relación entre $t_s$ y $\beta_2$}
 		\label{fig:ts}
 	\end{subfigure}
 	\caption{}
+	\end{center}
 \end{figure*}
 
 Una vez se han obtenido unos valores de $\zeta$ y $\beta$ que cumplan las especificaciones, se ha creado un código para calcular el tiempo de estabilización $t_s$ según el valor de $beta_2$ y la tolerancia $\nu$, y el resultado se muestra en la Figura \ref{fig:ts}.
 
-Con este código y viendo las gráficas anteriores, se han obtenido los siguientes valores para los parámetros:
+Con este código y viendo las gráficas anteriores, se han elegido los valores que se han considerado más adecuados para las especificaciones pedidas. Se ha elegido una $M_P \approx 0.1$, lo que establece los valores de $\beta$ y de $\zeta$. A partir de estos valores, se realiza la simulación del tiempo de estabilización, que se ha elegido como $t_s = 0.05 s$, lo que establece el valor de $\beta_2$.
 
 \begin{center}
 	\begin{tabular}{c|c}
@@ -275,26 +277,95 @@ Los valores obtenidos son:
 	\end{tabular}
 \end{center}
 
-Se han realizado pruebas para diferentes entradas: escalón, rampa y parábola.
+Se han realizado pruebas para diferentes entradas: escalón, rampa y parábola, como se aprecian en la figura \ref{respuestas}.
+En las tres gráficas se puede comprobar como el error en régimen permanente tiende a $0$.
 
-METER IMÁGENES Y DESCRIPCIONES
+\begin{center}
+	\begin{figure*}[htp]
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{step2}
+			\caption{Respuesta al escalón}
+			\label{fig:step}
+		\end{subfigure}
+	
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{ramp2}
+			\caption{Respuesta a la rampa}
+			\label{fig:ramp}
+		\end{subfigure}
+	
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{parab2}
+			\caption{Respuesta a la parábola}
+			\label{fig:parab}
+		\end{subfigure}
+		\caption{}
+		\label{respuestas}
+	\end{figure*}
+\end{center}
+
+Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_P$, $t_r$ y $t_s$ tras observar las gráficas de Matlab de la Figura \ref{fig:step} en detalle. 
+
+\begin{center}
+	\begin{figure*}[htp]
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{escalon_Mp2}
+			\caption{Detalle valor de $M_P$}
+			\label{mp}
+		\end{subfigure}
+		
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{escalon_ts_tr2}
+			\caption{Detalle valores de $t_s$ y $t_r$}
+			\label{fig:tr}
+		\end{subfigure}
+		\caption{}
+		\label{fig:escalon}
+	\end{figure*}
+\end{center}
+
+De la figura \ref{mp} se obtiene el valor de la sobreelongación máxima, que es aproximadamente $M_P=1.114$. El tiempo de subida y el tiempo de estabilización, $t_r=0.081 s$ y $t_s=0.185 s$, que se obtienen de la figura \ref{fig:tr}.
+
+Los valores obtenidos cumplen con las especificaciones que se piden en el ejercicio, aunque difieren ligeramente de los valores calculados teóricamente y mediante simulaciones. Esto probablemente se deba a las no linealidades del motor, rozamiento, saturación del controlador y la dependencia con el periodo de muestreo.
 
 \section{Análisis, diseño de un controlador PID en el lazo directo sintonizado en el dominio de la frecuencia mediante el método de Ziegler-Nichols Modificado}
 Se utiliza la función de transferencia:
 \begin{equation}
-G(s)=\frac{22233201,58}{s(s+8382,70)(s+64.986)}
+G(s)=\frac{22233201,58/23}{s(s+8382,70)(s+64.986)}
 \end{equation}
 \subsection{Análisis del motor en el Dominio de la Frecuencia}
-Para realizar este análisis se ha obtenido el diagrama de Bode y el diagrama de Nyquist en Matlab. Se añaden a continuación:
+Para realizar este análisis se ha obtenido el diagrama de Bode y el diagrama de Nyquist en Matlab que se pueden ver en la Figura \ref{bode}. En el diagrama de Bode se han marcado de forma aproximada los dos polos.
 
-En el diagrama de Bode se han marcado de forma aproximada los dos polos.
+\begin{center}
+	\begin{figure*}[htp]
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{bode}
+			\caption{Diagrama de Bode}
+		\end{subfigure}
+		
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{nyquist}
+			\caption{Diagrama de Nyquist}
+		\end{subfigure}
+		\caption{Representación de la función de transferencia del motor}
+		\label{bode}
+	\end{figure*}
+\end{center}
+
 
 En el diagrama de Nyquist se puede apreciar como en el origen hay un valor de ganancia infinita y una fase de -90\degree debido al primer polo de la función de transferencia. Esto es así debido a que cuando se analiza la posición angular del motor, este se comporta como un sistema integrador. Después, a medida que aumenta la frecuencia, la ganancia disminuye hasta que se llega al polo, donde la fase se ha retrasado 45\degree más. Cuando se produce el cruce con el eje, hay -180\degree en la fase, que se corresponden con una década más. Después de este primer polo, el módulo de la función de transferencia disminuye más rápido, por lo que aumenta aún más la curvatura del diagrama hacia el origen. Al haber otro polo más, el diagrama pasa por debajo del eje real ya que este está situado en -235\degree. Este polo provoca que la función de transferencia en el infinito tenga una fase de -270\degree.
 
 Como se puede apreciar estamos ante un sistema integrador que sería inestable frente a una referencia en lazo abierto. En ese caso, si se introduce una señal de referencia constante la salida crecería hacia el infinito de forma descontrolada. Por eso es necesario un sistema de lazo cerrado.
 
 \subsection{Diseñar un controlador mediante el método de Ziegler-Nichols Modificado}
-Desde el punto de vista de la frecuencia, un controlador PID desplaza los puntos del diagrama de Nyquist de tal forma que ajustando sus valores se puede variar el diagrama de Nyquist y por lo tanto los parámetros que forman el mismo para conseguir el sistema deseado.
+Desde el punto de vista de la frecuencia, un controlador PID desplaza los puntos del diagrama de Nyquist de tal forma que, ajustando los valores del controlador, se puede variar la forma del diagrama de Nyquist y por lo tanto los parámetros que forman el mismo para conseguir el sistema deseado.
 
 Se puede estudiar el comportamiento del motor en lazo cerrado, descrito en la siguiente ecuación, cuyo resultado se muestra en la figura \ref{fig:cl}.
 
@@ -302,27 +373,58 @@ Se puede estudiar el comportamiento del motor en lazo cerrado, descrito en la si
 H_{CL}(s)=\frac{G(s)}{1 + G(s)}
 \end{equation}
 
-A la vista de los resultados de esta simulación y del sistema conseguido en la sección \ref{sec:pruebas} se van a escoger los siguientes parámetros de diseño
-... margen de fase 30\degree (explicación)?? ... además, para que sea necesario el sistema completo PID, se desea que el error frente a una perturbación constante sea nulo.
+\begin{center}
+	\begin{figure}
+		\centering
+		\includegraphics[width=12cm]{lazo_cerrado}
+		\caption{Respuesta del motor en lazo cerrado a un escalón unitario}
+		\label{fig:cl}
+	\end{figure}
+\end{center}
+
+Como el diagrama de Nyquist del motor corta la circunferencia unidad con un ángulo cercano a 90\degree, se ha elegido utilizar un margen de fase menor, $M.F. = 30\degree$, para así reducir el tiempo de respuesta pero sin comprometer la estabilidad. Se han tenido en cuenta los resultados obtenidos en la sección \ref{sec:pruebas} para escoger la sobreelongación máxima y el tiempo de estabilización. $M_P=50\%$ y $t_s=10 s$, con una tolerancia del $5\%$. Estos márgenes son tan holgados debido a que se pretende centrarse en la respuesta en frecuencia del controlador en lugar de en su respuesta temporal. Además, se va a tener en cuenta también que el error frente a una perturbación constante debe ser nulo.
 
 Para cumplir estas especificaciones se va a elegir el punto de corte del diagrama de Nyquist del motor en lazo abierto con la circunferencia unidad, $A=G(j\omega_0)$,
-con $\omega_0 = ?? rad/s$ y se va a desplazar al punto $B=G_C(j\omega_0) G(j\omega_0)$, que también corta la circunferencia unidad pero en el punto donde $M.F. = 30\degree$.
+con $\omega_0 = 1.77 rad/s$ y se va a desplazar al punto $B=G_C(j\omega_0) G(j\omega_0)$, que también corta la circunferencia unidad pero en el punto donde $M.F. = 30\degree$.
 
-\begin{equation}
-LLAVE CON LOS PUNTOS
-\end{equation}
+
+\begin{subequations}
+	\begin{equation}
+		A=G(j\omega_0)=1 \phase{88.42\degree}
+	\end{equation}
+	\begin{equation}
+		B=G_C(j\omega_0) G(j\omega_0)= 1 \phase{30\degree}
+	\end{equation}
+\end{subequations}
 
 Para realizar estas transformaciones se usan las ecuaciones para un sistema PID descritas por el método de Ziegler-Nichols modificado.
 
-\begin{equation}
-eq Ziegler-Nichols PID
-\end{equation}
+\begin{subequations}
+	\begin{equation}
+		K_p=r_c cos \phi_c
+	\end{equation}
+	\begin{equation}
+		\tau_D = \alpha \tau_I
+	\end{equation}
+	\begin{equation}
+		\tau_I=\frac{tg\phi_c + \sqrt{4\alpha+tg^2\phi_c}}{2\omega_0\alpha}
+	\end{equation}
+\end{subequations}
 
-Si se elige aleatoriamente una $\alpha = ??$ se obtienen los siguientes parámetros:
 
-\begin{equation}
-KP,\tau_I,\tau_D
-\end{equation}
+Si se elige una $\alpha = 0.25$ se obtienen los siguientes parámetros:
+
+\begin{subequations}
+	\begin{equation}
+		K_p = 0.5236
+	\end{equation}
+	\begin{equation}
+		\tau_D = 0.0797
+	\end{equation}
+	\begin{equation}
+		\tau_I= 0.3188
+	\end{equation}
+\end{subequations}
 
 Con estos parámetros se puede describir el sistema en lazo cerrado:
 
@@ -334,15 +436,76 @@ G_C(s)=K_P (1 + s \tau_D + \frac{1}{s\tau_I})
 H(s)=\frac{G_C(s) G(s)}{1 + G_C(s) G(s)}
 \end{equation}
 
-Cuyo diagrama de Nyquist y respuesta al escalon se puede ver en la figura \ref{fig:sim} y se pueden comprobar que $M_P=??$ y $t_s=??$, cumpliendo las especificaciones de diseño. Además se obtiene el $M.F. = 30\degree$ deseado y un margen de ganancia infinito.
+Cuyo diagrama de Nyquist y respuesta al escalón se puede ver en la figura \ref{fig:sim} y se pueden comprobar que $M_P=47\%$ y $t_s=6.17 s$, cumpliendo las especificaciones de diseño. Además se obtiene el $M.F. = 30\degree$ deseado y un margen de ganancia infinito.
 
-FIGURA CON DIAGRAMA DE NYQUIST DE Gc*G Y step
+\begin{center}
+	\begin{figure*}[htp]
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{nyquist2}
+			\caption{Diagrama de Nyquist}
+		\end{subfigure}
+		
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{respuesta}
+			\caption{Respuesta al escalón}
+		\end{subfigure}
+		\caption{}
+		\label{fig:sim}
+	\end{figure*}
+\end{center}
+
 
 \subsection{Prueba del sistema diseñado en Telelabo}
 
-Igual que en el otro ejercicio se calculan KP, KI y KD y se meten las imágenes
+Para calcular los parámetros que se introducen en el software del Telelabo, se han utilizado las siguientes relaciones:
+\begin{equation}
+	K_I=\frac{K_p}{\tau_I} T_s
+\end{equation}
 
-Se pone tambien la respuesta a un seno de w0 para ver la fase
+\begin{equation}
+	K_{D}=\frac{K_P \tau_{D}}{T_s}
+\end{equation}
+
+En las pruebas se ha usado un valor de periodo de muestreo $T_s=5$.
+
+Los valores obtenidos son:
+\begin{center}
+	\begin{tabular}{c|c}
+		$K_P$ & 0.524 \\
+		$K_I$ & 0.008 \\
+		$K_{D}$ & 8.346 \\
+	\end{tabular}
+\end{center}
+
+
+Teniendo en cuenta la respuesta al escalón, se han calculado los valores de $M_P$, $t_r$ y $t_s$ tras observar las gráficas de Matlab de la Figura \ref{fig:detalle} en detalle. 
+
+\begin{center}
+	\begin{figure*}[htp]
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{escalon_Mp2}
+			\caption{Detalle valor de $M_P$}
+			\label{Mp}
+		\end{subfigure}
+		
+		\begin{subfigure}{1\textwidth}
+			\centering
+			\includegraphics[width=12cm]{escalon_ts_tr2}
+			\caption{Detalle valores de $t_s$ y $t_r$}
+			\label{fig:tr2}
+		\end{subfigure}
+		\caption{}
+		\label{fig:detalle}
+	\end{figure*}
+\end{center}
+
+De la figura \ref{Mp} se obtiene el valor de la sobreelongación máxima, que es aproximadamente $M_P=1.114$. El tiempo de subida y el tiempo de estabilización, $t_r=0.081 s$ y $t_s=0.185 s$, que se obtienen de la figura \ref{fig:tr2}.
+
+Los valores obtenidos cumplen con las especificaciones que se piden en el ejercicio, aunque difieren ligeramente de los valores calculados teóricamente y mediante simulaciones. Esto probablemente se deba a las no linealidades del motor, rozamiento, saturación del controlador y la dependencia con el periodo de muestreo.
+
 
 \section{Conclusiones}
 

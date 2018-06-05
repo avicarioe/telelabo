@@ -15,7 +15,7 @@ amorts=[0.6 0.7 0.8 0.9];
 beta2=0.5;
 len=500;
 
-%C√≥digo
+%CÛdigo
 beta=linspace(0,50,len);
 Mp=[];
 for amort=amorts
@@ -30,7 +30,7 @@ plot(beta, Mp')
 hold on
 hline(Mp_max, 0, 50);
 hline(Mp_min, 0, 50);
-title('Sobreelongaci√≥n m√°xima de y(t) de un D|PID')
+title('SobreelongaciÛn m·xima de y(t) de un D|PID')
 legend('\zeta=0.6','\zeta=0.7','\zeta=0.8','\zeta=0.9', 'Location', 'northeast')
 xlabel('\beta')
 ylabel('M_p')

@@ -31,7 +31,7 @@ rB = 1;
 phaB = pi+30*pi/180;
 
 % Cálculo de parámetros
-alpha = 0.25;
+alpha = 0.25d;
 rC = rB/rA;
 phaC = phaB - phaA;
 KP = rC*cos(phaC);
@@ -55,7 +55,7 @@ Tm = 0.005;
 KI=KP*Tm/tauI;
 KD=KP*tauD/Tm;
 
-fprintf("KP=%f\nKI=%f\nKD=%f\n",KP, KI, KD)
+fprintf('KP=%f\nKI=%f\nKD=%f\n',KP, KI, KD)
 
 t = 0:0.01:pi/w0*2*10;
 u = sin(w0*t);
