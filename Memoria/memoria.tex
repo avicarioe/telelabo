@@ -214,7 +214,7 @@ Donde $Q(\beta)=\beta^2-2 \beta + \frac{1}{\zeta^2}$.
 	\end{center}
 \end{figure*}
 
-Una vez se han obtenido unos valores de $\zeta$ y $\beta$ que cumplan las especificaciones, se ha creado un código para calcular el tiempo de estabilización $t_s$ según el valor de $beta_2$ y la tolerancia $\nu$, y el resultado se muestra en la Figura \ref{fig:ts}.
+Una vez se han obtenido unos valores de $\zeta$ y $\beta$ que cumplan las especificaciones, se ha creado un código para calcular el tiempo de estabilización $t_s$ según el valor de $\beta_2$ y la tolerancia $\nu$, y el resultado se muestra en la Figura \ref{fig:ts}.
 
 Con este código y viendo las gráficas anteriores, se han elegido los valores que se han considerado más adecuados para las especificaciones pedidas. Se ha elegido una $M_P \approx 0.1$, lo que establece los valores de $\beta$ y de $\zeta$. A partir de estos valores, se realiza la simulación del tiempo de estabilización, que se ha elegido como $t_s = 0.05 s$, lo que establece el valor de $\beta_2$.
 
@@ -233,7 +233,7 @@ A partir de estos datos se pueden obtener $K_P$, $\tau_{D1}$, $\tau_{D2}$ y $\ta
 		K_P=\frac{p^2(2\beta+\frac{1}{\zeta^2})}{\beta_2^2 K}
 	\end{equation}
 	\begin{equation}
-		\tau_I=\frac{\beta_2^2*\zeta^2(2\beta + \frac{1}{\zeta^2})}{\beta p}
+		\tau_I=\frac{\beta_2^2\zeta^2(2\beta + \frac{1}{\zeta^2})}{\beta p}
 	\end{equation}
 	\begin{equation}
 		\tau_{D1}=\frac{\beta_2(\beta-\beta_2+2)}{p(2\beta + \frac{1}{\zeta^2})}
@@ -490,8 +490,8 @@ Los valores obtenidos son:
 \end{center}
 
 Teniendo en cuenta la respuesta al escalón de la figura \ref{real}, se han obtenido los valores reales de $M_P = 40\% $ y $t_s = 9.5 s$.
-Además, como el diseño está enfocado a la respuesta en frecuencia, se ha realizado el experimento de respuesta un seno a la pulsación característica $\omega_0 = 1.77 rad/s$ del sistema realizado, cuya salida puede verse en la figura \ref{seno}.
-En este experimento se ha medido la amplitud y el desfase del seno resultante. Los valores teóricos de estos parámetros en el caso de un sistema realimentado, con un margen de fase $M.F = 30\degree$ y una ganancia unidad en la pulsación caracteristica son:
+Además, como el diseño está enfocado a la respuesta en frecuencia, se ha realizado el experimento de respuesta con un seno a la pulsación característica $\omega_0 = 1.77 rad/s$ del sistema realizado, cuya salida puede verse en la figura \ref{seno}.
+En este experimento se ha medido la amplitud y el desfase del seno resultante. Los valores teóricos de estos parámetros en el caso de un sistema realimentado, con un margen de fase $M.F = 30\degree$ y una ganancia unidad en la pulsación característica son:
 
 \begin{subequations}
 	\begin{equation}
@@ -527,15 +527,15 @@ Sin conocer exactamente la implementación del controlador en el laboratorio, se
 
 Con este trabajo se han seguido dos métodos de diseño diferentes basados en controladores: uno teniendo en cuenta el dominio de la frecuencia y otro bajo condiciones específicas de régimen permanente y transitorio.
 En ambos casos, los resultados obtenidos de forma teórica y matemática no coinciden del todo con las pruebas reales realizadas en el motor, a pesar de que cumplen con las especificaciones pedidas en el enunciado.
-Esto puede deberse a diversos factores, por una parte, el propio motor no es ideal, ya que existe un rozamiento, dependencias con la temperatura y con las condiciones ambientales, saturación, inexactitudes en su fabricación o desgaste del mismo., por ejemplo, pueden afectar al valor final de las pruebas.
+Esto puede deberse a diversos factores. Por una parte, el propio motor no es ideal, ya que existe un rozamiento, dependencias con la temperatura y con las condiciones ambientales, saturación, inexactitudes en su fabricación o desgaste del mismo. Todo esto pueden afectar al valor final de las pruebas.
 Por otra parte, existen también efectos causados por el software que lo controla.
 
-Estos últimos son los que ha resultado más interesantes. Por una parte, todo el desarrollo matemático se realiza para un sistema en tiempo continuo, sin embargo el sistema del TeleLabo, como cualquier equipo informático, opera en tiempo discreto, lo que obligaba a introducir el parámetro del tiempo de muestreo.
-Aunque en el desarrollo teórico este parámetro solo se tenía en cuenta al final, era facil comprobar que el sistema controlador no era independiente de este, llegando a casos en los que, por ejemplo, el sistema se volvía estable o inestable dependiendo de este parámetro.
+Estos últimos son los que resultan más interesantes. Por una parte, todo el desarrollo matemático se realiza para un sistema en tiempo continuo. Sin embargo, el sistema del TeleLabo, como cualquier equipo informático, opera en tiempo discreto, lo que obligaba a introducir el parámetro del tiempo de muestreo.
+Aunque en el desarrollo teórico este parámetro solo se tenía en cuenta al final, era fácil comprobar que el sistema controlador no era independiente de este, llegando a casos en los que, por ejemplo, el sistema se volvía estable o inestable dependiendo de este parámetro.
 
 También ha sido interesante descubrir como el motor se "paraba" en algunos momentos, como en la figura \ref{escalonreal}, sin causa aparente, provocando algo parecido a una saturación. Este efecto no se puede estudiar en profundidad sin conocer la implementación del sistema controlador, pero muy probablemente sea debido a la saturación de algún valor interno del sistema, seguramente de la parte integral.
 
-EN definitiva, lo que se ha podido aplicar en el desarrollo de la práctica, es que a pesar de las no idealidades que pueda tener un sistema cualquiera, si se trabaja dentro de unos rangos determinados y se guardan una serie de precauciones, es posible que los sistemas teóricos obtengan resultados muy similares a su implementación real, lo que es tremendamente útil, ya que es posible trabajar de forma mucho más eficiente con ellos.
+En definitiva, lo que se ha podido aplicar en el desarrollo de la práctica, es que a pesar de las no idealidades que pueda tener un sistema cualquiera, si se trabaja dentro de unos rangos determinados y se guardan una serie de precauciones, es posible que los sistemas teóricos obtengan resultados muy similares a su implementación real, lo que es tremendamente útil, ya que es posible trabajar de forma mucho más eficiente con ellos.
 
 
 \begin{thebibliography}{9}
