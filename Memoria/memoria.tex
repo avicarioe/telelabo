@@ -100,7 +100,7 @@ Ya que estos controladores no se pueden analizar de forma matemática es importa
 \subsubsection{Controladores PID-D y D\textbar PID}
 Como los controladores PID-D son una generalización de los controladores PID y PI-D, para los que con $\tau_{D1}=0$ se obtiene un sistema PI-D y con $\tau_{D2}=0$ se obtiene un sistema PID.
 
-Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$ que son funciones que dependen de $\beta$, $\zeta$ y $\omega_n$ de tal forma que si $frac{r1}{\omega_n}$, $\frac{r2}{\omega_n^2}$, $frac{r3}{\omega_n}$ son independientes de $\beta_2$, como en el caso del controlador PID-D y D\textbar PID, tendremos $M_p$ independiente de $\beta$, por lo que para diseñar estos controladores se puede seguir el mismo procedimientos que para diseñar los controladores PID y los PI-D.
+Para analizar estos controladores se introducen los parámetros $r1$, $r2$, $r3$ que son funciones que dependen de $\beta$, $\zeta$ y $\omega_n$ de tal forma que si $\frac{r1}{\omega_n}$, $\frac{r2}{\omega_n^2}$, $\frac{r3}{\omega_n}$ son independientes de $\beta_2$, como en el caso del controlador PID-D y D\textbar PID, tendremos $M_p$ independiente de $\beta$, por lo que para diseñar estos controladores se puede seguir el mismo procedimientos que para diseñar los controladores PID y los PI-D.
 
 \section{Análisis, diseño e implementación de un sistema de control de la posición angular de un motor DC, imponiendo especificaciones de régimen permanente y transitorio, utilizando un controlador D\textbar PID}
 Se va a utilizar la siguiente función de transferencia:
@@ -489,7 +489,7 @@ Los valores obtenidos son:
 	\end{tabular}
 \end{center}
 
-Teniendo en cuenta la respuesta al escalón de la figura \ref{real}, se han obtenido los valores reales de $M_P = 40\% $ y $t_s = 9.5 s$.
+Teniendo en cuenta la respuesta al escalón de la figura \ref{escalonreal}, se han obtenido los valores reales de $M_P = 40\% $ y $t_s = 9.5 s$.
 Además, como el diseño está enfocado a la respuesta en frecuencia, se ha realizado el experimento de respuesta con un seno a la pulsación característica $\omega_0 = 1.77 rad/s$ del sistema realizado, cuya salida puede verse en la figura \ref{seno}.
 En este experimento se ha medido la amplitud y el desfase del seno resultante. Los valores teóricos de estos parámetros en el caso de un sistema realimentado, con un margen de fase $M.F = 30\degree$ y una ganancia unidad en la pulsación característica son:
 
@@ -502,7 +502,7 @@ En este experimento se ha medido la amplitud y el desfase del seno resultante. L
 	\end{equation}
 \end{subequations}
 
-Tras realizar el experimento en el Telelabo los valores obtenidos son: $Amp = 1.5$ y $\phi \approx 85\degree$, los cuales difieren apreciablemente del sistema teórico.
+Tras realizar el experimento en el Telelabo los valores obtenidos son: $Amp = 1.5$ y $\phi \approx -85\degree$, los cuales difieren apreciablemente del sistema teórico.
 Sin conocer exactamente la implementación del controlador en el laboratorio, según la figura \ref{real}, parece que hubiera algún tipo de saturación en el sistema, probablemente de la parte integral, que provoca una distorsión que modifica el resultado del experimento.
 
 \begin{figure*}[htp]
@@ -527,13 +527,13 @@ Sin conocer exactamente la implementación del controlador en el laboratorio, se
 
 Con este trabajo se han seguido dos métodos de diseño diferentes basados en controladores: uno teniendo en cuenta el dominio de la frecuencia y otro bajo condiciones específicas de régimen permanente y transitorio.
 En ambos casos, los resultados obtenidos de forma teórica y matemática no coinciden del todo con las pruebas reales realizadas en el motor, a pesar de que cumplen con las especificaciones pedidas en el enunciado.
-Esto puede deberse a diversos factores. Por una parte, el propio motor no es ideal, ya que existe un rozamiento, dependencias con la temperatura y con las condiciones ambientales, saturación, inexactitudes en su fabricación o desgaste del mismo. Todo esto pueden afectar al valor final de las pruebas.
+Esto puede deberse a diversos factores. Por una parte, el propio motor no es ideal, ya que existe un rozamiento, dependencias con la temperatura y con las condiciones ambientales, saturación, inexactitudes en su fabricación o desgaste del mismo. Todo esto puede afectar al valor final de las pruebas.
 Por otra parte, existen también efectos causados por el software que lo controla.
 
 Estos últimos son los que resultan más interesantes. Por una parte, todo el desarrollo matemático se realiza para un sistema en tiempo continuo. Sin embargo, el sistema del TeleLabo, como cualquier equipo informático, opera en tiempo discreto, lo que obligaba a introducir el parámetro del tiempo de muestreo.
 Aunque en el desarrollo teórico este parámetro solo se tenía en cuenta al final, era fácil comprobar que el sistema controlador no era independiente de este, llegando a casos en los que, por ejemplo, el sistema se volvía estable o inestable dependiendo de este parámetro.
 
-También ha sido interesante descubrir como el motor se "paraba" en algunos momentos, como en la figura \ref{escalonreal}, sin causa aparente, provocando algo parecido a una saturación. Este efecto no se puede estudiar en profundidad sin conocer la implementación del sistema controlador, pero muy probablemente sea debido a la saturación de algún valor interno del sistema, seguramente de la parte integral.
+También ha sido interesante descubrir como el motor se ``paraba'' en algunos momentos, como en la figura \ref{escalonreal}, sin causa aparente, provocando algo parecido a una saturación. Este efecto no se puede estudiar en profundidad sin conocer la implementación del sistema controlador, pero muy probablemente sea debido a la saturación de algún valor interno del sistema, seguramente de la parte integral.
 
 En definitiva, lo que se ha podido aplicar en el desarrollo de la práctica, es que a pesar de las no idealidades que pueda tener un sistema cualquiera, si se trabaja dentro de unos rangos determinados y se guardan una serie de precauciones, es posible que los sistemas teóricos obtengan resultados muy similares a su implementación real, lo que es tremendamente útil, ya que es posible trabajar de forma mucho más eficiente con ellos.
 
