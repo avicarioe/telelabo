@@ -31,7 +31,7 @@ rB = 1;
 phaB = pi+30*pi/180;
 
 % Cálculo de parámetros
-alpha = 0.25d;
+alpha = 0.25;
 rC = rB/rA;
 phaC = phaB - phaA;
 KP = rC*cos(phaC);
